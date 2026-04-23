@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wishlist</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .wishlist-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+    }
+
+    .card p {
+      margin: 5px 0;
+    }
+
+    .btn {
+      padding: 8px 10px;
+      margin: 5px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .remove {
+      background: red;
+      color: white;
+    }
+
+    .cart {
+      background: black;
+      color: white;
+    }
+
+    .empty {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 18px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+<h1>❤️ Your Wishlist</h1>
+
+<div id="wishlist" class="wishlist-container"></div>
+
+<p id="emptyMsg" class="empty"></p>
+
+<script>
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+const container = document.getElementById("wishlist");
+const emptyMsg = document.getElementById("emptyMsg");
+
+// Show empty message
+if (wishlist.length === 0) {
+  emptyMsg.innerText = "Your wishlist is empty 😢";
+}
+
+// Display wishlist
+function displayWishlist() {
+  container.innerHTML = "";
+
+  wishlist.forEach((item, index) => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${item.image}">
+        <h3>${item.name}</h3>
+        <p>₹${item.price}</p>
+
+        <button class="btn remove" onclick="removeItem(${index})">
+          Remove ❌
+        </button>
+
+        <button class="btn cart" onclick="moveToCart(${index})">
+          Move to Cart 🛒
+        </button>
+      </div>
+    `;
+  });
+}
+
+// Remove item
+function removeItem(index) {
+  wishlist.splice(index, 1);
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  displayWishlist();
+  location.reload();
+}
+
+// Move to cart
+function moveToCart(index) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.push(wishlist[index]);
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  wishlist.splice(index, 1);
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+  displayWishlist();
+  location.reload();
+}
+
+// Load
+displayWishlist();
+</script>
+
+</body>
+</html>

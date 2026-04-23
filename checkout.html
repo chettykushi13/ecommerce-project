@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .summary {
+      background: #eee;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🧾 Checkout</h1>
+
+  <div class="summary" id="summary"></div>
+
+  <input type="text" id="name" placeholder="Full Name">
+  <input type="text" id="phone" placeholder="Phone Number">
+  <textarea id="address" placeholder="Delivery Address"></textarea>
+
+  <button onclick="placeOrder()">Place Order</button>
+
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let summary = document.getElementById("summary");
+
+// calculate total
+let total = 0;
+cart.forEach(item => {
+  total += item.price * item.quantity;
+});
+
+// show summary
+summary.innerHTML = `
+  <p>Items: ${cart.length}</p>
+  <p>Total Amount: ₹${total}</p>
+`;
+
+function placeOrder() {
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
+
+  if (!name || !phone || !address) {
+    alert("Please fill all details");
+    return;
+  }
+
+  // clear cart after order
+  localStorage.removeItem("cart");
+
+  alert("🎉 Order Placed Successfully!");
+
+  window.location.href = "order-success.html";
+}
+</script>
+
+</body>
+</html>

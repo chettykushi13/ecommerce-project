@@ -1,0 +1,133 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: #111;
+  color: white;
+}
+
+.search {
+  width: 40%;
+  padding: 8px;
+}
+
+/* Banner */
+.banner {
+  background: linear-gradient(to right, #ff6a00, #ee0979);
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
+.filters {
+  text-align: center;
+  margin: 20px;
+}
+
+.filters button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  background: black;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.filters button:hover {
+  background: #333;
+}
+
+/* Products */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  padding: 20px;
+  gap: 20px;
+}
+
+.card {
+  position: relative;  /* 🔥 ADD THIS */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.wishlist-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#wishlist-count {
+  background: red;
+  color: white;
+  padding: 2px 6px;
+  margin-left: 5px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.card p {
+  margin: 5px 0;
+}
+
+.card p:last-of-type {
+  color: gold;
+  font-size: 14px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.cart-box {
+  background: orange;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#cart-count {
+  background: red;
+  color: white;
+  padding: 2px 6px;
+  margin-left: 5px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.card {
+  border-radius: 10px;
+  padding: 10px;
+  background: white;
+}

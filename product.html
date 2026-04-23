@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Details</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+    }
+
+    img {
+      width: 300px;
+      border-radius: 10px;
+    }
+
+    .details {
+      max-width: 400px;
+    }
+
+    button {
+      padding: 10px;
+      background: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #rating span {
+      font-size: 22px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Product Details</h1>
+
+<div class="container">
+  <img id="image">
+
+  <div class="details">
+    <h2 id="name"></h2>
+    <p id="price"></p>
+
+    <div id="rating"></div>
+
+    <button onclick="addToCart()">Add to Cart 🛒</button>
+  </div>
+</div>
+
+<script>
+// ================= SAFE PRODUCT LOAD =================
+let product = JSON.parse(localStorage.getItem("selectedProduct"));
+
+// ❌ if no product found
+if (!product) {
+  alert("No product selected!");
+  window.location.href = "index.html";
+}
+
+// ================= SHOW PRODUCT =================
+document.getElementById("image").src = product.image || "https://via.placeholder.com/300";
+document.getElementById("name").innerText = product.name;
+document.getElementById("price").innerText = "₹" + product.price;
+
+// ================= ADD TO CART (FIXED) =================
+function addToCart() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let existing = cart.find(item => item.name === product.name);
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert("Added to cart 🛒");
+}
+
+// ================= RATING SYSTEM =================
+let currentRating = product.rating || 0;
+
+function showRating() {
+  let stars = "";
+
+  for (let i = 1; i <= 5; i++) {
+    if (i <= currentRating) {
+      stars += `<span onclick="rate(${i})">⭐</span>`;
+    } else {
+      stars += `<span onclick="rate(${i})">☆</span>`;
+    }
+  }
+
+  document.getElementById("rating").innerHTML = stars;
+}
+
+function rate(value) {
+  currentRating = value;
+
+  product.rating = value;
+  localStorage.setItem("selectedProduct", JSON.stringify(product));
+
+  showRating();
+}
+
+// INIT
+showRating();
+</script>
+
+</body>
+</html>
